@@ -1,0 +1,7 @@
+{
+  "name": "Chintala's Family Memories",
+  "description": "A warm, secure digital heirloom celebrating Chintala's shared family memories with an interactive gallery and protected Family Portal.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+

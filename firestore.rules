@@ -1,0 +1,38 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isValidId(id) {
+      return id is string && id.size() > 0 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function isValidMemory(data) {
+      return data.keys().hasAll(['id', 'title', 'caption', 'album', 'imageUrl', 'dateTaken', 'uploadedAt'])
+        && data.id is string && data.id.size() <= 128
+        && data.title is string && data.title.size() <= 200
+        && data.caption is string && data.caption.size() <= 2000
+        && data.album is string && data.album.size() <= 100
+        && data.imageUrl is string && data.imageUrl.size() <= 2000000
+        && data.dateTaken is string && data.dateTaken.size() <= 100
+        && data.uploadedAt is string;
+    }
+
+    // Memories collection - accessible worldwide to view, managed by family portal
+    match /memories/{memoryId} {
+      allow read: if true;
+      allow create: if isValidId(memoryId) && isValidMemory(request.resource.data);
+      allow update: if isValidId(memoryId) && isValidMemory(request.resource.data);
+      allow delete: if isValidId(memoryId);
+    }
+
+    // Connection test document
+    match /test/{docId} {
+      allow read, write: if true;
+    }
+
+    // Catch-all default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

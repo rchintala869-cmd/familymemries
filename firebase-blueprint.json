@@ -1,0 +1,61 @@
+{
+  "entities": {
+    "MemoryPhoto": {
+      "title": "MemoryPhoto",
+      "description": "A family memory photograph record stored permanently in the Chinthala family archive.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the memory photo.",
+          "maxLength": 128
+        },
+        "title": {
+          "type": "string",
+          "description": "Title or headline of the memory photograph.",
+          "maxLength": 200
+        },
+        "caption": {
+          "type": "string",
+          "description": "Detailed description or memory story.",
+          "maxLength": 2000
+        },
+        "album": {
+          "type": "string",
+          "description": "The album or chapter name the photo belongs to.",
+          "maxLength": 100
+        },
+        "imageUrl": {
+          "type": "string",
+          "description": "URL or high-resolution data URI of the photo.",
+          "maxLength": 2000000
+        },
+        "dateTaken": {
+          "type": "string",
+          "description": "Date the photograph was taken.",
+          "maxLength": 100
+        },
+        "uploadedAt": {
+          "type": "string",
+          "description": "Timestamp string when uploaded."
+        },
+        "location": {
+          "type": "string",
+          "description": "Location where the photograph was captured.",
+          "maxLength": 200
+        },
+        "familyMembers": {
+          "type": "array",
+          "description": "List of family members featured in the photograph."
+        }
+      },
+      "required": ["id", "title", "caption", "album", "imageUrl", "dateTaken", "uploadedAt"]
+    }
+  },
+  "firestore": {
+    "/memories/{memoryId}": {
+      "schema": "MemoryPhoto",
+      "description": "Worldwide permanent storage of Chinthala family memories."
+    }
+  }
+}
